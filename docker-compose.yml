@@ -1,0 +1,15 @@
+version: '2'
+services:
+  zaxi:
+    image: flum1025/zaxi
+    restart: always
+    environment:
+      ESXI_HOST: 192.168.0.0
+      ESXI_USER: user
+      ESXI_PASSWORD: password
+      ZABBIX_API_URL: https://zabbix_host/api_jsonrpc.php
+      ZABBIX_API_USER: zabbix_user
+      ZABBIX_API_PASSWORD: zabbix_password
+      ZABBIX_SENDER_HOST: 192.168.0.0
+      ZABBIX_SENDER_PORT: 10051
+      ZABBIX_ESXI_HOST: esxi_host_name
