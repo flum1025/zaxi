@@ -42,3 +42,16 @@ This variable is port of Zabbix server or proxy.
 ### `ZABBIX_ESXI_HOST`
 
 This variable is ESXi host of Zabbix monitoring item.
+
+Behavior
+---
+
+1. Get root ESXi host from vSphere API.
+2. Get host_id of Zabbix monitoring item.
+3. Get or Create Zabbix application. `storage.smart`
+4. Get storage devices of ESXi host
+5. Get S.M.A.R.T Statuses
+6. Get or Create Zabbix item.   
+  `storage.smart[{{ device }},{{ smart_item_name }},{{ /Threashold|Value|Worst/ }}]`  
+  ex. `storage.smart[t10.ATA_____DEVICE____________________________DEVICE,driver_rated_max_temperature,threshold]	`
+7. Send measurement data to Zabbix
