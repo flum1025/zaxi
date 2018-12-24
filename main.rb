@@ -1,6 +1,14 @@
 require 'logger'
 require_relative 'zaxi'
 
+INTERVAL = 60 * 60 # 1hour
+
+logger = Logger.new(
+  STDOUT,
+  level: Logger::INFO,
+  datetime_format: '%Y-%m-%d %H:%M:%S.%L '
+)
+
 zaxi = Zaxi.new(
   esxi: {
     host: ENV['ESXI_HOST'],
@@ -19,11 +27,15 @@ zaxi = Zaxi.new(
     },
     esxi_host: ENV['ZABBIX_ESXI_HOST']
   },
-  logger: Logger.new(
-    STDOUT,
-    level: Logger::INFO,
-    datetime_format: '%Y-%m-%d %H:%M:%S.%L '
-  )
+  logger: logger
 )
 
-zaxi.update
+loop do
+  begin
+    zaxi.update
+  rescue StandardError => e
+    logger.fatal(e)
+  ensure
+    sleep INTERVAL
+  end
+end
