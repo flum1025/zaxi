@@ -9,7 +9,7 @@ logger = Logger.new(
   datetime_format: '%Y-%m-%d %H:%M:%S.%L '
 )
 
-zaxi = Zaxi.new(
+setting = {
   esxi: {
     host: ENV['ESXI_HOST'],
     user: ENV['ESXI_USER'],
@@ -28,11 +28,11 @@ zaxi = Zaxi.new(
     esxi_host: ENV['ZABBIX_ESXI_HOST']
   },
   logger: logger
-)
+}
 
 loop do
   begin
-    zaxi.update
+    Zaxi.new(setting).update
   rescue StandardError => e
     logger.fatal(e)
   ensure
